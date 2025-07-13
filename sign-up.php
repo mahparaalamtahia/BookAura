@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>BookAura ‒ Log In</title>
+  <title> BookAura ‒ Sign Up</title>
 
   <!-- Favicon -->
   <link rel="icon" href="websites-assets/img/icon_logo.png" type="image/x-icon" />
@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="websites-assets/css/style.css" />
 
   <style>
-    /* Full‐height background */
+    /* Full‐height gradient background */
     body {
       min-height: 100vh;
       display: flex;
@@ -26,7 +26,7 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* Navbar override to match theme */
+    /* Navbar */
     .navbar-custom {
       background-color: #2a1b4e;
     }
@@ -38,26 +38,26 @@
       color: #ffc107;
     }
 
-    /* Center the login card */
-    .login-container {
+    /* Center the signup card */
+    .signup-container {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding-top: 60px; /* to clear fixed navbar */
+      padding-top: 60px; /* offset for fixed navbar */
       padding-bottom: 60px;
     }
 
-    /* Login card styling */
-    .login-card {
+    /* Signup card styling */
+    .signup-card {
       width: 100%;
-      max-width: 420px;
+      max-width: 500px;
       background: #fff;
       border-radius: 0.75rem;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
       overflow: hidden;
     }
-    .login-card .card-header {
+    .signup-card .card-header {
       background-color: #2a1b4e;
       color: #fff;
       font-size: 1.25rem;
@@ -65,13 +65,13 @@
       text-align: center;
       padding: 1rem;
     }
-    .login-card .card-body {
+    .signup-card .card-body {
       padding: 1.5rem;
     }
-    .login-card .form-control {
+    .signup-card .form-control {
       border-radius: 0.25rem;
     }
-    .login-card .btn-login {
+    .signup-card .btn-signup {
       background-color: #4b2e83;
       border: none;
       width: 100%;
@@ -79,10 +79,10 @@
       padding: 0.75rem;
       transition: background-color 0.3s ease;
     }
-    .login-card .btn-login:hover {
+    .signup-card .btn-signup:hover {
       background-color: #3a2267;
     }
-    .login-card .text-danger {
+    .signup-card .text-danger {
       font-size: 0.9rem;
     }
   </style>
@@ -108,73 +108,87 @@
     </div>
   </nav>
 
-  <!-- Centered Login Form Container -->
-  <div class="login-container">
-    <div class="login-card card">
+  <!-- Centered Sign Up Form Container -->
+  <div class="signup-container">
+    <div class="signup-card card">
       <div class="card-header">
-        Log In
+        Sign Up
       </div>
       <?php
-        // PHP Logic
         require_once('functions/function.php');
+
         if (!empty($_POST)) {
-          $email = $_POST['email'];
-          $password = md5($_POST['password']);
+          $slug       = uniqid('USER');
+          $name       = $_POST['name'];
+          $email      = $_POST['email'];
+          $mobile     = $_POST['mobile'];
+          $address    = $_POST['address'];
+          $nid        = $_POST['nid'];
+          $password   = md5($_POST['password']);
+          $repass     = md5($_POST['repassword']);
 
-          // Regular user
-          $select = "SELECT * FROM user WHERE email='$email' AND password='$password'";
-          $Q = mysqli_query($con, $select);
-          $Q_data = mysqli_fetch_assoc($Q);
+          if ($password === $repass) {
+            $insert = "INSERT INTO user(name, email, mobile, address, nid, password, slug, role_id)
+                       VALUES ('$name','$email','$mobile','$address','$nid','$password','$slug','4')";
 
-          // Super‐admin
-          $select_sa = "SELECT * FROM super_admin WHERE sa_email='$email' AND sa_password='$password'";
-          $Q_sa = mysqli_query($con, $select_sa);
-          $Q_sa_data = mysqli_fetch_assoc($Q_sa);
+            $signup = mysqli_query($con, $insert);
 
-          if ($Q_data) {
-            $_SESSION['id']       = $Q_data['id'];
-            $_SESSION['email']    = $Q_data['email'];
-            $_SESSION['name']     = $Q_data['name'];
-            $_SESSION['photo']    = $Q_data['photo'];
-            $_SESSION['role_id']  = $Q_data['role_id'];
-            $_SESSION['slug']     = $Q_data['slug'];
-            $_SESSION['password'] = $Q_data['password'];
-            $_SESSION['success_alert'] = '0';
+            // Automatically log in
+            $select = "SELECT * FROM user WHERE email='$email' AND password='$password'";
+            $Q      = mysqli_query($con, $select);
+            $Q_data = mysqli_fetch_assoc($Q);
 
-            if ($Q_data['role_id'] == '1') {
-              header('Location: dashboard.php');
-            } else {
+            if ($signup && $Q_data) {
+              $_SESSION['id']       = $Q_data['id'];
+              $_SESSION['email']    = $Q_data['email'];
+              $_SESSION['name']     = $Q_data['name'];
+              $_SESSION['photo']    = $Q_data['photo'];
+              $_SESSION['role_id']  = $Q_data['role_id'];
+              $_SESSION['slug']     = $Q_data['slug'];
+              $_SESSION['password'] = $Q_data['password'];
+              $_SESSION['success_alert'] = '0';
+
               header('Location: my-profile.php');
+              exit;
+            } else {
+              echo '<div class="text-danger text-center mb-3">Your registration failed. Please try again.</div>';
             }
-            exit;
-          }
-          elseif ($Q_sa_data) {
-            $_SESSION['id']         = "SA1";
-            $_SESSION['email']      = $Q_sa_data['sa_email'];
-            $_SESSION['name']       = "Admin";
-            $_SESSION['photo']      = "";
-            $_SESSION['role_id']    = $Q_sa_data['role_id'];
-            $_SESSION['sa_password'] = $Q_sa_data['sa_password'];
-            $_SESSION['success_alert'] = '0';
-            header('Location: dashboard.php');
-            exit;
-          }
-          else {
-            echo '<div class="text-danger text-center mb-3">Your email or password did not match.</div>';
+          } else {
+            echo '<div class="text-danger text-center mb-3">Password confirmation did not match.</div>';
           }
         }
       ?>
       <form method="post" action="">
         <div class="card-body">
           <div class="mb-3">
+            <label for="name" class="form-label"><b>Name <span class="text-danger">*</span></b></label>
+            <input type="text" class="form-control" id="name" name="name" required />
+          </div>
+          <div class="mb-3">
             <label for="email" class="form-label"><b>Email <span class="text-danger">*</span></b></label>
             <input type="email" class="form-control" id="email" name="email" required />
+          </div>
+          <div class="mb-3">
+            <label for="mobile" class="form-label"><b>Mobile <span class="text-danger">*</span></b></label>
+            <input type="text" class="form-control" id="mobile" name="mobile" required />
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label"><b>Address <span class="text-danger">*</span></b></label>
+            <input type="text" class="form-control" id="address" name="address" required />
+          </div>
+          <div class="mb-3">
+            <label for="nid" class="form-label"><b>NID <span class="text-danger">*</span></b></label>
+            <input type="text" class="form-control" id="nid" name="nid" required />
           </div>
           <div class="mb-3">
             <label for="password" class="form-label"><b>Password <span class="text-danger">*</span></b></label>
             <input type="password" class="form-control" id="password" name="password" required />
           </div>
-          <button type="submit" class="btn btn-login">Log In</button>
+          <div class="mb-3">
+            <label for="repassword" class="form-label"><b>Confirm Password <span class="text-danger">*</span></b></label>
+            <input type="password" class="form-control" id="repassword" name="repassword" required />
+          </div>
+          <button type="submit" class="btn btn-signup">Sign Up</button>
         </div>
       </form>
     </div>

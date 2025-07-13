@@ -24,6 +24,9 @@
 
         <?php if ($_SESSION['role_id'] == '1'): ?>
             
+            <a class="nav-link text-white" href="all-book.php"><i class="fas fa-book-open"></i> All Book</a>
+            <a class="nav-link text-white" href="add-book.php"><i class="fas fa-plus-circle"></i> Add Book</a>
+
             <a class="nav-link text-white" href="all-category.php"><i class="fas fa-layer-group"></i> All Category</a>
             <a class="nav-link text-white" href="add-category.php"><i class="fas fa-plus-square"></i> Add Category</a>
             
