@@ -30,9 +30,14 @@
             <a class="nav-link text-white" href="all-category.php"><i class="fas fa-layer-group"></i> All Category</a>
             <a class="nav-link text-white" href="add-category.php"><i class="fas fa-plus-square"></i> Add Category</a>
             
+            <a class="nav-link text-white" href="library-pending-requests.php"><i class="fas fa-clock"></i> Pending Book Requests</a>
+
         <?php endif; ?>
 
         <?php if ($_SESSION['role_id'] == '4'): ?>
+
+            <a class="nav-link text-white" href="user-sent-book-requests.php"><i class="fas fa-paper-plane"></i> Pending Book Requests</a>
+
            
         <?php endif; ?>
 

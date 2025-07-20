@@ -19,7 +19,7 @@ if (!$result) {
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>All Books | BookAura</title>
+  <title>All Books | Library</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="websites-assets/img/icon_logo.png" type="image/x-icon" />
   <link rel="stylesheet" href="websites-assets/css/bootstrap.min.css" />
@@ -222,7 +222,7 @@ if (!$result) {
   <!-- Navbar -->
   <nav class="navbar navbar-expand-md navbar-custom fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="index.php">BookAura</a>
+      <a class="navbar-brand" href="index.php">Library</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon text-white">&#9776;</span>
@@ -243,12 +243,12 @@ if (!$result) {
   <!-- Page Header -->
   <header class="page-header">
     <h1>Our Book Collection</h1>
-    <p>Explore the wide variety of books available in BookAura.</p>
+    <p>Explore the wide variety of books available in our library.</p>
   </header>
 
   <!-- Search Bar -->
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search books by name..." aria-label="Search books" />
+    <input type="text" id="searchInput" placeholder="Search books by name, author or category..." aria-label="Search books" />
   </div>
 
   <!-- Books Grid -->
@@ -264,7 +264,7 @@ if (!$result) {
           <p><strong>Author:</strong> <?= htmlspecialchars($row['author']) ?></p>
           <p><strong>Category:</strong> <?= htmlspecialchars($row['category_name']) ?></p>
           <p><strong>Available:</strong> <?= $row['quantity'] ?></p>
-          <a class="btn" href="#">Borrow Request</a>
+          <a class="btn" href="borrow-request.php?id=<?= urlencode($row['id']) ?>">Borrow Request</a>
         </div>
       </article>
     <?php endwhile; ?>
@@ -273,7 +273,7 @@ if (!$result) {
   <!-- Footer -->
 <footer>
   <div class="container">
-    <p>© 2025 BookAura. All rights reserved.</p>
+    <p>© 2025 Library. All rights reserved.</p>
     <div>
       <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
       <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
