@@ -31,6 +31,7 @@
             <a class="nav-link text-white" href="add-category.php"><i class="fas fa-plus-square"></i> Add Category</a>
             
             <a class="nav-link text-white" href="library-pending-requests.php"><i class="fas fa-clock"></i> Pending Book Requests</a>
+            <a class="nav-link text-white" href="library-approved-requests.php"><i class="fas fa-check-circle"></i> Approved Book Requests</a>
 
         <?php endif; ?>
 
