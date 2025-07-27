@@ -19,7 +19,7 @@
     <nav class="nav flex-column">
         <?php if ($_SESSION['role_id'] == '2' || $_SESSION['role_id'] == '3' || $_SESSION['role_id'] == '4'): ?>
             <a class="nav-link text-white" href="my-profile.php"><i class="fas fa-user"></i> My Profile</a>
-           
+            <a class="nav-link text-white" href="update-my-profile.php"><i class="fas fa-user-edit"></i> Update Profile</a>
         <?php endif; ?>
 
         <?php if ($_SESSION['role_id'] == '1'): ?>
@@ -38,6 +38,8 @@
         <?php if ($_SESSION['role_id'] == '4'): ?>
 
             <a class="nav-link text-white" href="user-sent-book-requests.php"><i class="fas fa-paper-plane"></i> Pending Book Requests</a>
+            <a class="nav-link text-white" href="user-approved-book-sent-requests.php"><i class="fas fa-thumbs-up"></i> Approved Book Requests</a>
+            <a class="nav-link text-white" href="user-reject-book.php"><i class="fas fa-times-circle"></i> Rejected Book History</a>
 
            
         <?php endif; ?>
