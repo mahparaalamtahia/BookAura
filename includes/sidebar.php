@@ -32,6 +32,7 @@
             
             <a class="nav-link text-white" href="library-pending-requests.php"><i class="fas fa-clock"></i> Pending Book Requests</a>
             <a class="nav-link text-white" href="library-approved-requests.php"><i class="fas fa-check-circle"></i> Approved Book Requests</a>
+            <a class="nav-link text-white" href="library-return-book.php"><i class="fas fa-history"></i> Returned Book History</a>
 
         <?php endif; ?>
 
@@ -40,7 +41,7 @@
             <a class="nav-link text-white" href="user-sent-book-requests.php"><i class="fas fa-paper-plane"></i> Pending Book Requests</a>
             <a class="nav-link text-white" href="user-approved-book-sent-requests.php"><i class="fas fa-thumbs-up"></i> Approved Book Requests</a>
             <a class="nav-link text-white" href="user-reject-book.php"><i class="fas fa-times-circle"></i> Rejected Book History</a>
-
+            <a class="nav-link text-white" href="user-return-book.php"><i class="fas fa-undo"></i> Returned Book History</a>
            
         <?php endif; ?>
 
